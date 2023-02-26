@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
+import android.view.View
 import androidx.core.content.ContextCompat
 import com.erhansen.pomodoro.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private var time = 0
+    private var maxProgress = 0
     private val countDownTime = 60
+    private lateinit var countDownTimer: CountDownTimer
     private lateinit var activityMainBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         with(activityMainBinding) {
 
+            pauseButton.visibility = View.INVISIBLE
 
             toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
 
@@ -27,30 +32,37 @@ class MainActivity : AppCompatActivity() {
                         R.id.shortBreakButton -> {
                             linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.light_blue))
                             chronometer.text = "05:00"
-                            startButton.setOnClickListener {
-                                startTimer(300000, 300)
-                            }
+                            maxProgress = 300
+                            time = 300000
                         }
                         R.id.pomodoroButton -> {
                             linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.red))
                             chronometer.text = "25:00"
-                            startButton.setOnClickListener {
-                                startTimer(1500000, 1500)
-                            }
+                            maxProgress = 1500
+                            time = 1500000
                         }
                         R.id.longBreakButton -> {
                             linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.dark_blue))
                             chronometer.text = "15:00"
-                            startButton.setOnClickListener {
-                                startTimer(900000, 900)
-                            }
+                            maxProgress = 900
+                            time = 900000
                         }
                     }
                 }
 
             }
 
+            startButton.setOnClickListener {
+                startTimer(time.toLong(), maxProgress)
+                pauseButton.visibility = View.VISIBLE
+                startButton.visibility = View.INVISIBLE
+            }
 
+            pauseButton.setOnClickListener {
+                startButton.visibility = View.VISIBLE
+                pauseButton.visibility = View.INVISIBLE
+                pauseTimer()
+            }
 
         }
 
@@ -64,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             chronometer.base = SystemClock.elapsedRealtime() + (countDownTime * 1000)
             chronometer.format = "mm:ss"
 
-            val countDownTimer = object : CountDownTimer(time, 1000) {
+            countDownTimer = object : CountDownTimer(time, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     val seconds = (millisUntilFinished / 1000).toInt()
                     val minutes = seconds / 60
@@ -85,7 +97,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun pauseTimer() {
+        countDownTimer.cancel()
+        val currentTime = activityMainBinding.chronometer.text.split(":")
+        val minute = currentTime[0].toInt()
+        val second = currentTime[1].toInt()
+        time = if (currentTime[0] != "00") ((minute * 60) + second) * 1000
+        else second * 1000
+    }
 
 
 }
