@@ -9,112 +9,136 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <ProgressBar
         android:id="@+id/progressBar"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="25dp"
-        android:progressTint="@color/white"
-        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal">
-    </ProgressBar>
+        android:progressTint="@color/white"/>
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleGroup"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="30dp"
+        android:orientation="vertical"
+        android:background="#20000000"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp"
-        android:gravity="center"
-        app:singleSelection="true">
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
 
-        <Button
-            android:id="@+id/shortBreakButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            app:singleSelection="true">
+
+            <Button
+                android:id="@+id/shortBreakButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/arialrounded"
+                android:text="@string/short_break"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/pomodoroButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/arialrounded"
+                android:text="@string/pomodoro"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/longBreakButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/arialrounded"
+                android:text="@string/long_break"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+        <Chronometer
+            android:id="@+id/chronometer"
             android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:text="@string/short_break"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:fontFamily="@font/arialrounded"
-            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="64sp" />
 
-        <Button
-            android:id="@+id/pomodoroButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:text="@string/pomodoro"
-            android:fontFamily="@font/arialrounded"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:layout_marginTop="30dp">
 
-        <Button
-            android:id="@+id/longBreakButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:text="@string/long_break"
-            android:fontFamily="@font/arialrounded"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="12sp"/>
+            <Button
+                android:id="@+id/startButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/white"
+                android:text="@string/start"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+            <Button
+                android:id="@+id/pauseButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/white"
+                android:text="@string/pause"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-
-    <Chronometer
-        android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/white"
-        android:layout_gravity="center"
-        android:fontFamily="@font/arialrounded"
-        android:textSize="64sp"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addTaskButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="100dp"
-        android:layout_marginTop="30dp">
-
-        <Button
-            android:id="@+id/startButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/white"
-            android:text="@string/start"
-            android:textColor="@color/red"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/pauseButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/white"
-            android:text="@string/pause"
-            android:textColor="@color/red"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="30dp"
+        android:text="Add Task"
+        android:fontFamily="@font/arialrounded"
+        android:gravity="center_vertical|center_horizontal"
+        app:icon="@drawable/baseline_add_circle_outline_24"
+        app:iconGravity="textStart"
+        app:iconPadding="10dp"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#20000000">
+    </com.google.android.material.button.MaterialButton>
 
 
 </LinearLayout>

@@ -25,6 +25,9 @@ class MainActivity : AppCompatActivity() {
 
             pauseButton.visibility = View.INVISIBLE
 
+            toggleGroup.check(R.id.pomodoroButton)
+            checkPomodoroButton()
+
             toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
 
                 if (isChecked) {
@@ -36,10 +39,7 @@ class MainActivity : AppCompatActivity() {
                             time = 300000
                         }
                         R.id.pomodoroButton -> {
-                            linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.red))
-                            chronometer.text = "25:00"
-                            maxProgress = 1500
-                            time = 1500000
+                            checkPomodoroButton()
                         }
                         R.id.longBreakButton -> {
                             linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.dark_blue))
@@ -106,5 +106,11 @@ class MainActivity : AppCompatActivity() {
         else second * 1000
     }
 
+    private fun checkPomodoroButton() {
+        activityMainBinding.linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.red))
+        activityMainBinding.chronometer.text = "25:00"
+        maxProgress = 1500
+        time = 1500000
+    }
 
 }
