@@ -9,13 +9,23 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="25dp"
+        android:progressTint="@color/white"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal">
+    </ProgressBar>
+
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
         app:singleSelection="true">
@@ -24,8 +34,10 @@
             android:id="@+id/shortBreakButton"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_height="60dp"
             android:text="@string/short_break"
+            android:fontFamily="@font/arialrounded"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -34,8 +46,10 @@
             android:id="@+id/pomodoroButton"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_height="60dp"
             android:text="@string/pomodoro"
+            android:fontFamily="@font/arialrounded"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -45,7 +59,9 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
+            android:layout_weight="1"
             android:text="@string/long_break"
+            android:fontFamily="@font/arialrounded"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp"/>
@@ -60,6 +76,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
         android:layout_gravity="center"
+        android:fontFamily="@font/arialrounded"
         android:textSize="64sp"/>
 
 

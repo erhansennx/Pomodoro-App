@@ -28,21 +28,21 @@ class MainActivity : AppCompatActivity() {
                             linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.light_blue))
                             chronometer.text = "05:00"
                             startButton.setOnClickListener {
-                                startTimer(300000)
+                                startTimer(300000, 300)
                             }
                         }
                         R.id.pomodoroButton -> {
                             linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.red))
                             chronometer.text = "25:00"
                             startButton.setOnClickListener {
-                                startTimer(1500000)
+                                startTimer(1500000, 1500)
                             }
                         }
                         R.id.longBreakButton -> {
                             linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.dark_blue))
                             chronometer.text = "15:00"
                             startButton.setOnClickListener {
-                                startTimer(900000)
+                                startTimer(900000, 900)
                             }
                         }
                     }
@@ -58,16 +58,18 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun startTimer(time: Long) {
+    private fun startTimer(time: Long, maxProgress: Int) {
         with(activityMainBinding) {
+            progressBar.max = maxProgress
             chronometer.base = SystemClock.elapsedRealtime() + (countDownTime * 1000)
             chronometer.format = "mm:ss"
-            val endTime = SystemClock.elapsedRealtime() + (countDownTime * 1000)
+
             val countDownTimer = object : CountDownTimer(time, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     val seconds = (millisUntilFinished / 1000).toInt()
                     val minutes = seconds / 60
                     val remainderSeconds = seconds % 60
+                    progressBar.progress = maxProgress - ((minutes * 60) + remainderSeconds)
                     if (minutes < 10 && remainderSeconds < 10) chronometer.text = "0$minutes:0$remainderSeconds"
                     else if (minutes < 10 && remainderSeconds > 10) chronometer.text = "0$minutes:$remainderSeconds"
                     else if (minutes > 10 && remainderSeconds < 10) chronometer.text = "$minutes:0$remainderSeconds"
@@ -79,6 +81,7 @@ class MainActivity : AppCompatActivity() {
                     chronometer.text = "00:00"
                 }
             }.start()
+
         }
     }
 
