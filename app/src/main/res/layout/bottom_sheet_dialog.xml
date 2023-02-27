@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:paddingBottom="25dp"
+    android:orientation="vertical">
+
+    <!-- #222222 -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="30dp"
+        android:hint="New Task">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/arialrounded"></com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/upButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/baseline_arrow_drop_up_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            android:backgroundTint="#222222"/>
+        <TextView
+            android:id="@+id/valueText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="1"
+            android:layout_margin="5dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:fontFamily="@font/arialrounded"
+            android:textSize="24sp"
+            android:textColor="#535353"
+            android:background="#EFEFEF"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/downButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/baseline_arrow_drop_down_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            android:backgroundTint="#222222"/>
+
+    </LinearLayout>
+</LinearLayout>

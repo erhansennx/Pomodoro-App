@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#20000000"
+        android:background="#10000000"
         android:layout_marginTop="10dp"
         android:paddingTop="20dp"
         android:paddingBottom="20dp">
@@ -136,8 +136,8 @@
         app:iconPadding="10dp"
         android:textColor="@color/white"
         android:textAllCaps="false"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#20000000">
+        android:layout_marginTop="15dp"
+        android:backgroundTint="#222222">
     </com.google.android.material.button.MaterialButton>
 
 
