@@ -7,7 +7,9 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.erhansen.pomodoro.adapter.RecyclerAdapter
 import com.erhansen.pomodoro.databinding.ActivityMainBinding
+import com.erhansen.pomodoro.model.TaskModal
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class MainActivity : AppCompatActivity() {
@@ -15,8 +17,8 @@ class MainActivity : AppCompatActivity() {
     private var time = 0
     private var maxProgress = 0
     private val countDownTime = 60
-
-    //private lateinit var dialog: BottomSheetDialog
+    private var taskArrayList: ArrayList<TaskModal> = arrayListOf()
+    private lateinit var newTask: NewTask
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var activityMainBinding: ActivityMainBinding
 
@@ -25,9 +27,11 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
-        //dialog = BottomSheetDialog(applicationContext)
+
 
         with(activityMainBinding) {
+
+            newTask = NewTask(this@MainActivity, recyclerView)
 
             pauseButton.visibility = View.INVISIBLE
 
@@ -71,13 +75,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             addTaskButton.setOnClickListener {
-                /*val bottomSheetDialog = BottomSheetDialog(this@MainActivity)
-                val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_dialog, null)
-                bottomSheetDialog.setContentView(bottomSheetView)
-                bottomSheetDialog.show()*/
-                val newTask = NewTask(this@MainActivity)
+                //val newTask = NewTask(this@MainActivity)
                 newTask.showBottomSheet()
+                recyclerView.adapter?.notifyDataSetChanged()
             }
+
+            taskArrayList = newTask.loadData()
+            val customRecyclerAdapter = RecyclerAdapter(context = applicationContext, taskArrayList)
+            recyclerView.adapter = customRecyclerAdapter
 
         }
 

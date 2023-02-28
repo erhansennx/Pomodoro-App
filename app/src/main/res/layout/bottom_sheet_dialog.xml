@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
-    android:paddingBottom="25dp"
+    android:paddingBottom="30dp"
     android:orientation="vertical">
 
     <!-- #222222 -->
@@ -18,7 +18,7 @@
         android:hint="New Task">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextInput"
+            android:id="@+id/taskEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/arialrounded"></com.google.android.material.textfield.TextInputEditText>
@@ -37,7 +37,7 @@
             app:icon="@drawable/baseline_arrow_drop_up_24"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
-            android:backgroundTint="#222222"/>
+            android:backgroundTint="@color/bottom_sheet_button"/>
         <TextView
             android:id="@+id/valueText"
             android:layout_width="0dp"
@@ -47,7 +47,7 @@
             android:layout_weight="3"
             android:gravity="center"
             android:fontFamily="@font/arialrounded"
-            android:textSize="24sp"
+            android:textSize="21sp"
             android:textColor="#535353"
             android:background="#EFEFEF"/>
 
@@ -58,7 +58,17 @@
             app:icon="@drawable/baseline_arrow_drop_down_24"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
-            android:backgroundTint="#222222"/>
-
+            android:backgroundTint="@color/bottom_sheet_button"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:layout_marginHorizontal="30dp"
+        android:backgroundTint="#222222">
+    </Button>
+
 </LinearLayout>

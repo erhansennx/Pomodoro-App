@@ -11,4 +11,5 @@
     <color name="light_blue">#38858A</color>
     <color name="dark_blue">#397097</color>
     <color name="circle">#CCCCCC</color>
+    <color name="bottom_sheet_button">#768E97</color>
 </resources>
