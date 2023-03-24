@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainBinding.root)
 
 
-
         with(activityMainBinding) {
 
             newTask = NewTask(this@MainActivity, recyclerView)

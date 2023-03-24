@@ -15,11 +15,12 @@ class NewTask(private val context: Context, private val recyclerView: RecyclerVi
 
     private var userTask = ""
     private var currentValue = 1
+    //private val pomodoroDatabase: PomodoroDatabase? = PomodoroDatabase.getPomodoroDB(context)
     private val taskArrayList: ArrayList<TaskModal> = arrayListOf()
 
     @SuppressLint("MissingInflatedId") // ignores errors
     fun showBottomSheet() {
-        val bottomSheetDialog = BottomSheetDialog(context)
+        val bottomSheetDialog = BottomSheetDialog(context, R.style.BottomSheetDialogTheme)
         val layoutInflater = LayoutInflater.from(context)
         val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_dialog, null)
         val upButton = bottomSheetView.findViewById<MaterialButton>(R.id.upButton)
@@ -48,6 +49,7 @@ class NewTask(private val context: Context, private val recyclerView: RecyclerVi
                 val taskModal = TaskModal(userTask, currentValue)
                 taskArrayList.add(taskModal)
                 recyclerView.adapter?.notifyDataSetChanged()
+                saveData(userTask, currentValue)
             }
             currentValue = 1
             bottomSheetDialog.cancel()
@@ -57,6 +59,10 @@ class NewTask(private val context: Context, private val recyclerView: RecyclerVi
 
     fun loadData(): ArrayList<TaskModal> {
         return taskArrayList
+    }
+
+    private fun saveData(taskName: String, taskStudyNumber: Int) {
+        //pomodoroDatabase?.pomodoroDao()?.saveTask(PomodoroEntity(taskName = taskName, taskStudyNumber = taskStudyNumber))
     }
 
 }

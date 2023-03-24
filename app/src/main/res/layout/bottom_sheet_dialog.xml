@@ -4,17 +4,26 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
+    android:background="@drawable/round_top"
     android:paddingBottom="30dp"
     android:orientation="vertical">
 
     <!-- #222222 -->
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:background="@drawable/round"
+        android:backgroundTint="@color/gray"
+        android:layout_marginTop="15dp"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:hint="New Task">
 
         <com.google.android.material.textfield.TextInputEditText
