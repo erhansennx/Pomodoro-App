@@ -15,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 class MainActivity : AppCompatActivity() {
 
     private var time = 0
+    private var mode = "Pomodoro"
     private var maxProgress = 0
     private val countDownTime = 60
     private var taskArrayList: ArrayList<TaskModal> = arrayListOf()
@@ -44,15 +45,18 @@ class MainActivity : AppCompatActivity() {
                         R.id.shortBreakButton -> {
                             linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.light_blue))
                             chronometer.text = "05:00"
+                            mode = "Short Break"
                             maxProgress = 300
                             time = 300000
                         }
                         R.id.pomodoroButton -> {
                             checkPomodoroButton()
+                            mode = "Pomodoro"
                         }
                         R.id.longBreakButton -> {
                             linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.dark_blue))
                             chronometer.text = "15:00"
+                            mode = "Long Break"
                             maxProgress = 900
                             time = 900000
                         }
@@ -77,6 +81,12 @@ class MainActivity : AppCompatActivity() {
                 //val newTask = NewTask(this@MainActivity)
                 newTask.showBottomSheet()
                 recyclerView.adapter?.notifyDataSetChanged()
+            }
+
+            refresh.setOnClickListener {
+                refreshTimer(mode)
+                startButton.visibility = View.VISIBLE
+                pauseButton.visibility = View.INVISIBLE
             }
 
             taskArrayList = newTask.loadData()
@@ -125,6 +135,16 @@ class MainActivity : AppCompatActivity() {
         else second * 1000
     }
 
+    private fun refreshTimer(mode: String) {
+        countDownTimer.cancel()
+        activityMainBinding.progressBar.progress = 0
+        when(mode) {
+            "Short Break" -> activityMainBinding.chronometer.text = "05:00"
+            "Pomodoro" -> checkPomodoroButton()
+            "Long Break" -> activityMainBinding.chronometer.text = "15:00"
+        }
+    }
+
     private fun checkPomodoroButton() {
         activityMainBinding.linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.red))
         activityMainBinding.chronometer.text = "25:00"
@@ -133,3 +153,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+

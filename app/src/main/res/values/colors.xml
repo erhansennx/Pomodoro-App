@@ -13,4 +13,5 @@
     <color name="circle">#CCCCCC</color>
     <color name="bottom_sheet_button">#768E97</color>
     <color name="gray">#495057</color>
+    <color name="background">#222222</color>
 </resources>
