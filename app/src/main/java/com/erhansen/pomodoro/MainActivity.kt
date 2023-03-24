@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private var mode = "Pomodoro"
     private var maxProgress = 0
     private val countDownTime = 60
+    private var isTimerRunning = false
     private var taskArrayList: ArrayList<TaskModal> = arrayListOf()
     private lateinit var newTask: NewTask
     private lateinit var countDownTimer: CountDownTimer
@@ -43,22 +44,28 @@ class MainActivity : AppCompatActivity() {
                 if (isChecked) {
                     when (checkedId) {
                         R.id.shortBreakButton -> {
-                            linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.light_blue))
-                            chronometer.text = "05:00"
-                            mode = "Short Break"
-                            maxProgress = 300
-                            time = 300000
+                            if (!isTimerRunning) {
+                                linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.light_blue))
+                                chronometer.text = "05:00"
+                                mode = "Short Break"
+                                maxProgress = 300
+                                time = 300000
+                            }
                         }
                         R.id.pomodoroButton -> {
-                            checkPomodoroButton()
-                            mode = "Pomodoro"
+                            if (!isTimerRunning) {
+                                checkPomodoroButton()
+                                mode = "Pomodoro"
+                            }
                         }
                         R.id.longBreakButton -> {
-                            linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.dark_blue))
-                            chronometer.text = "15:00"
-                            mode = "Long Break"
-                            maxProgress = 900
-                            time = 900000
+                            if (!isTimerRunning) {
+                                linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.dark_blue))
+                                chronometer.text = "15:00"
+                                mode = "Long Break"
+                                maxProgress = 900
+                                time = 900000
+                            }
                         }
                     }
                 }
@@ -104,6 +111,10 @@ class MainActivity : AppCompatActivity() {
             progressBar.max = maxProgress
             chronometer.base = SystemClock.elapsedRealtime() + (countDownTime * 1000)
             chronometer.format = "mm:ss"
+            isTimerRunning = true
+            activityMainBinding.shortBreakButton.isClickable = false
+            activityMainBinding.pomodoroButton.isClickable = false
+            activityMainBinding.longBreakButton.isClickable = false
 
             countDownTimer = object : CountDownTimer(time, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
@@ -128,6 +139,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun pauseTimer() {
         countDownTimer.cancel()
+        isTimerRunning = false
+        activityMainBinding.shortBreakButton.isClickable = true
+        activityMainBinding.pomodoroButton.isClickable = true
+        activityMainBinding.longBreakButton.isClickable = true
         val currentTime = activityMainBinding.chronometer.text.split(":")
         val minute = currentTime[0].toInt()
         val second = currentTime[1].toInt()
@@ -137,6 +152,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun refreshTimer(mode: String) {
         countDownTimer.cancel()
+        isTimerRunning = false
+        activityMainBinding.shortBreakButton.isClickable = true
+        activityMainBinding.pomodoroButton.isClickable = true
+        activityMainBinding.longBreakButton.isClickable = true
         activityMainBinding.progressBar.progress = 0
         when(mode) {
             "Short Break" -> activityMainBinding.chronometer.text = "05:00"
