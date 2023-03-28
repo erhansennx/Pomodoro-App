@@ -1,16 +1,17 @@
-package com.erhansen.pomodoro
+package com.erhansen.pomodoro.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
-import android.view.LayoutInflater
+import android.provider.ContactsContract.Data
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.erhansen.pomodoro.R
 import com.erhansen.pomodoro.adapter.RecyclerAdapter
+import com.erhansen.pomodoro.database.DatabaseHandler
 import com.erhansen.pomodoro.databinding.ActivityMainBinding
 import com.erhansen.pomodoro.model.TaskModal
-import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private var maxProgress = 0
     private val countDownTime = 60
     private var isTimerRunning = false
+    private lateinit var databaseHandler: DatabaseHandler
     private var taskArrayList: ArrayList<TaskModal> = arrayListOf()
     private lateinit var newTask: NewTask
     private lateinit var countDownTimer: CountDownTimer
@@ -33,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         with(activityMainBinding) {
 
             newTask = NewTask(this@MainActivity, recyclerView)
+            databaseHandler = DatabaseHandler(this@MainActivity)
+            databaseHandler.getAllData()
 
             pauseButton.visibility = View.INVISIBLE
 
@@ -45,7 +49,9 @@ class MainActivity : AppCompatActivity() {
                     when (checkedId) {
                         R.id.shortBreakButton -> {
                             if (!isTimerRunning) {
-                                linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.light_blue))
+                                linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,
+                                    R.color.light_blue
+                                ))
                                 chronometer.text = "05:00"
                                 mode = "Short Break"
                                 maxProgress = 300
@@ -60,7 +66,9 @@ class MainActivity : AppCompatActivity() {
                         }
                         R.id.longBreakButton -> {
                             if (!isTimerRunning) {
-                                linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.dark_blue))
+                                linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,
+                                    R.color.dark_blue
+                                ))
                                 chronometer.text = "15:00"
                                 mode = "Long Break"
                                 maxProgress = 900
@@ -165,7 +173,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPomodoroButton() {
-        activityMainBinding.linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.red))
+        activityMainBinding.linearLayout.setBackgroundColor(ContextCompat.getColor(this@MainActivity,
+            R.color.red
+        ))
         activityMainBinding.chronometer.text = "25:00"
         maxProgress = 1500
         time = 1500000

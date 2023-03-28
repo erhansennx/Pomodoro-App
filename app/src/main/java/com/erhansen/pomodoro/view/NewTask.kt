@@ -1,11 +1,14 @@
-package com.erhansen.pomodoro
+package com.erhansen.pomodoro.view
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.erhansen.pomodoro.R
+import com.erhansen.pomodoro.database.DatabaseHandler
 import com.erhansen.pomodoro.model.TaskModal
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
@@ -16,9 +19,10 @@ class NewTask(private val context: Context, private val recyclerView: RecyclerVi
     private var userTask = ""
     private var currentValue = 1
     //private val pomodoroDatabase: PomodoroDatabase? = PomodoroDatabase.getPomodoroDB(context)
-    private val taskArrayList: ArrayList<TaskModal> = arrayListOf()
+    private var databaseHandler = DatabaseHandler(context)
+    private val taskArrayList: ArrayList<TaskModal> = databaseHandler.getAllData()
 
-    @SuppressLint("MissingInflatedId") // ignores errors
+    @SuppressLint("MissingInflatedId", "NotifyDataSetChanged") // ignores errors
     fun showBottomSheet() {
         val bottomSheetDialog = BottomSheetDialog(context, R.style.BottomSheetDialogTheme)
         val layoutInflater = LayoutInflater.from(context)
@@ -62,7 +66,8 @@ class NewTask(private val context: Context, private val recyclerView: RecyclerVi
     }
 
     private fun saveData(taskName: String, taskStudyNumber: Int) {
-        //pomodoroDatabase?.pomodoroDao()?.saveTask(PomodoroEntity(taskName = taskName, taskStudyNumber = taskStudyNumber))
+        databaseHandler.addData(taskName, taskStudyNumber)
+        Toast.makeText(context, "Kayıt başarılı", Toast.LENGTH_SHORT).show()
     }
 
 }

@@ -17,20 +17,50 @@
         android:backgroundTint="@color/gray"
         android:layout_marginTop="15dp"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pomodoro Create Task"
+        android:layout_marginHorizontal="30dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/arialrounded"
+        android:textSize="24sp"
+        android:layout_marginTop="40dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_task"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/gray"
+        android:fontFamily="@font/arialrounded"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lets_task"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="25dp"
+        android:textColor="#4CAF50"
+        android:fontFamily="@font/arialrounded"
+        android:textSize="14sp"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="40dp"
-        android:hint="New Task">
+        android:layout_marginTop="5dp"
+        android:hint="Create Task">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/taskEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/arialrounded"></com.google.android.material.textfield.TextInputEditText>
+            android:fontFamily="@font/arialrounded"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout

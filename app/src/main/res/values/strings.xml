@@ -8,4 +8,6 @@
     <string name="pomodoro_start">25:00</string>
     <string name="stop">stop</string>
     <string name="save">Save</string>
+    <string name="create_task">Benefits of creating tasks; It Makes it easier to Plan, Increases Efficiency, Helps with Focus, Facilitates Success, Boosts Motivation, Facilitates time Management.</string>
+    <string name="lets_task">Let\'s create a task.🎉</string>
 </resources>
