@@ -55,7 +55,7 @@ class DatabaseHandler(private val context: Context) : SQLiteOpenHelper(context, 
             while (cursor.moveToNext()) {
                 val cursorTask = cursor.getString(cursor.getColumnIndex(COLUMN_TASK))
                 val cursorGoal = cursor.getInt(cursor.getColumnIndex(COLUMN_GOAL))
-                val task = TaskModal(cursorTask, cursorGoal)
+                val task = TaskModal(cursorTask, cursorGoal,false)
                 taskList.add(task)
             }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.erhansen.pomodoro.R
 import com.erhansen.pomodoro.database.DatabaseHandler
@@ -13,6 +14,7 @@ import com.erhansen.pomodoro.model.TaskModal
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class NewTask(private val context: Context, private val recyclerView: RecyclerView) {
 
@@ -32,8 +34,10 @@ class NewTask(private val context: Context, private val recyclerView: RecyclerVi
         val saveButton = bottomSheetView.findViewById<Button>(R.id.saveButton)
         val valueText = bottomSheetView.findViewById<TextView>(R.id.valueText)
         val taskEditText = bottomSheetView.findViewById<TextInputEditText>(R.id.taskEditText)
+        val taskLayout = bottomSheetView.findViewById<TextInputLayout>(R.id.textInputLayout)
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
+
 
         upButton.setOnClickListener {
             currentValue++
@@ -50,7 +54,7 @@ class NewTask(private val context: Context, private val recyclerView: RecyclerVi
         saveButton.setOnClickListener {
             userTask = taskEditText.text.toString()
             if  (userTask.isNotEmpty()) {
-                val taskModal = TaskModal(userTask, currentValue)
+                val taskModal = TaskModal(userTask, currentValue, false)
                 taskArrayList.add(taskModal)
                 recyclerView.adapter?.notifyDataSetChanged()
                 saveData(userTask, currentValue)

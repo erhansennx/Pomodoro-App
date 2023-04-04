@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
 import android.provider.ContactsContract.Data
+import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.erhansen.pomodoro.R
 import com.erhansen.pomodoro.adapter.RecyclerAdapter
 import com.erhansen.pomodoro.database.DatabaseHandler
@@ -105,8 +107,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             taskArrayList = newTask.loadData()
-            val customRecyclerAdapter = RecyclerAdapter(context = applicationContext, taskArrayList)
+            val customRecyclerAdapter = RecyclerAdapter(context = applicationContext, taskText, taskArrayList)
             recyclerView.adapter = customRecyclerAdapter
+
 
         }
 

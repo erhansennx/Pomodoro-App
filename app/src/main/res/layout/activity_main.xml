@@ -38,7 +38,7 @@
             android:gravity="center"
             app:singleSelection="true">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/shortBreakButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/pomodoroButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/longBreakButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
@@ -86,6 +86,16 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
             android:textSize="64sp" />
+
+        <TextView
+            android:id="@+id/taskText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Task Name"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-light"
+            android:layout_gravity="center"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -159,7 +169,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
     </androidx.recyclerview.widget.RecyclerView>
 
 
