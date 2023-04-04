@@ -54,7 +54,7 @@ class NewTask(private val context: Context, private val recyclerView: RecyclerVi
         saveButton.setOnClickListener {
             userTask = taskEditText.text.toString()
             if  (userTask.isNotEmpty()) {
-                val taskModal = TaskModal(userTask, currentValue, false)
+                val taskModal = TaskModal(userTask, 0, currentValue,false)
                 taskArrayList.add(taskModal)
                 recyclerView.adapter?.notifyDataSetChanged()
                 saveData(userTask, currentValue)

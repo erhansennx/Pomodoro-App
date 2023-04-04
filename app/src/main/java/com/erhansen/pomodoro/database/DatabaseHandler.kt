@@ -16,11 +16,12 @@ class DatabaseHandler(private val context: Context) : SQLiteOpenHelper(context, 
         private const val TABLE_NAME = "task"
         private const val COLUMN_ID = "id"
         private const val COLUMN_TASK = "task"
+        private const val COLUMN_DONE_GOAL = "doneGoal"
         private const val COLUMN_GOAL = "goal"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val createTable = ("CREATE TABLE $TABLE_NAME($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_TASK VARCHAR, $COLUMN_GOAL INTEGER)")
+        val createTable = ("CREATE TABLE $TABLE_NAME($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_TASK VARCHAR, $COLUMN_DONE_GOAL INTEGER, $COLUMN_GOAL INTEGER)")
         db?.execSQL(createTable)
     }
 
@@ -34,6 +35,7 @@ class DatabaseHandler(private val context: Context) : SQLiteOpenHelper(context, 
             val db = this.writableDatabase
             val values = ContentValues()
             values.put(COLUMN_TASK, task)
+            values.put(COLUMN_DONE_GOAL, 0)
             values.put(COLUMN_GOAL, goal)
             db.insert(TABLE_NAME, null, values)
             db.close()
@@ -54,8 +56,9 @@ class DatabaseHandler(private val context: Context) : SQLiteOpenHelper(context, 
 
             while (cursor.moveToNext()) {
                 val cursorTask = cursor.getString(cursor.getColumnIndex(COLUMN_TASK))
+                val cursorDoneGoal = cursor.getInt(cursor.getColumnIndex(COLUMN_DONE_GOAL))
                 val cursorGoal = cursor.getInt(cursor.getColumnIndex(COLUMN_GOAL))
-                val task = TaskModal(cursorTask, cursorGoal,false)
+                val task = TaskModal(cursorTask, cursorDoneGoal, cursorGoal,false)
                 taskList.add(task)
             }
 
@@ -84,8 +87,9 @@ class DatabaseHandler(private val context: Context) : SQLiteOpenHelper(context, 
         try {
             val db = this.writableDatabase
             val values = ContentValues()
-            values.put("Task", task.userTask)
-            values.put("Goal", task.studyNumber)
+            values.put("task", task.userTask)
+            values.put("doneGoal", task.doneGoal)
+            values.put("goal", task.studyNumber)
             db.update(TABLE_NAME, values, "$COLUMN_TASK = ?", arrayOf(task.userTask))
             db.close()
         } catch (e: java.lang.Exception) {

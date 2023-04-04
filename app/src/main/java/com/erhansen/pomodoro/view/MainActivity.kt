@@ -7,6 +7,7 @@ import android.os.SystemClock
 import android.provider.ContactsContract.Data
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.erhansen.pomodoro.R
@@ -83,6 +84,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             startButton.setOnClickListener {
+                isTimerRunning = true
                 startTimer(time.toLong(), maxProgress)
                 pauseButton.visibility = View.VISIBLE
                 startButton.visibility = View.INVISIBLE
@@ -96,8 +98,12 @@ class MainActivity : AppCompatActivity() {
 
             addTaskButton.setOnClickListener {
                 //val newTask = NewTask(this@MainActivity)
-                newTask.showBottomSheet()
-                recyclerView.adapter?.notifyDataSetChanged()
+                if (!isTimerRunning) {
+                    newTask.showBottomSheet()
+                    recyclerView.adapter?.notifyDataSetChanged()
+                } else {
+                    Toast.makeText(this@MainActivity, "You can't do this while the timer is running.", Toast.LENGTH_SHORT).show()
+                }
             }
 
             refresh.setOnClickListener {
@@ -142,6 +148,13 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onFinish() {
                     chronometer.text = "00:00"
+                    val taskObject = findObject(taskText.text.toString(), taskArrayList)
+                    taskObject?.let {
+                        val increaseGoal = taskObject.doneGoal + 1
+                        val newObject = TaskModal(taskObject.userTask, increaseGoal, taskObject.studyNumber, taskObject.check)
+                        databaseHandler.updateData(newObject)
+                        Toast.makeText(this@MainActivity, "Updated.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }.start()
 
@@ -181,7 +194,16 @@ class MainActivity : AppCompatActivity() {
         ))
         activityMainBinding.chronometer.text = "25:00"
         maxProgress = 1500
-        time = 1500000
+        time = 25000 //1500000
+    }
+
+    private fun findObject(task: String, array: ArrayList<TaskModal>): TaskModal? {
+        for (taskObject in array) {
+            if  (taskObject.userTask == task) {
+                return taskObject
+            }
+        }
+        return null
     }
 
 }

@@ -27,7 +27,7 @@ class RecyclerAdapter(private val context: Context, private var taskTextView: Te
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         holder.taskTextView.text = taskArrayList[position].userTask
-        holder.studyNumberText.text = "0/${taskArrayList[position].studyNumber}"
+        holder.studyNumberText.text = "${taskArrayList[position].doneGoal}/${taskArrayList[position].studyNumber}"
         if (!taskArrayList[position].check) holder.checkImageView.visibility = View.GONE
         holder.itemView.setOnLongClickListener {
             if (selectedItem == null) {
