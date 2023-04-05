@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private val countDownTime = 60
     private var isTimerRunning = false
     private lateinit var newTask: NewTask
+    private lateinit var customRecyclerAdapter: RecyclerAdapter
     private lateinit var alertDialogBuilder: AlertDialog.Builder
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var databaseHandler: DatabaseHandler
@@ -44,6 +45,8 @@ class MainActivity : AppCompatActivity() {
             databaseHandler.getAllData()
             newTask = NewTask(this@MainActivity, recyclerView)
             alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
+            customRecyclerAdapter = RecyclerAdapter(context = applicationContext, activity = this@MainActivity,
+                mode = mode, taskTextView = taskText, taskArrayList = taskArrayList)
 
 
             pauseButton.visibility = View.INVISIBLE
@@ -64,12 +67,14 @@ class MainActivity : AppCompatActivity() {
                                 mode = "Short Break"
                                 maxProgress = 300
                                 time = 300000
+                                customRecyclerAdapter.changeMode(mode)
                             }
                         }
                         R.id.pomodoroButton -> {
                             if (!isTimerRunning) {
                                 checkPomodoroButton()
                                 mode = "Pomodoro"
+                                customRecyclerAdapter.changeMode(mode)
                             }
                         }
                         R.id.longBreakButton -> {
@@ -81,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                                 mode = "Long Break"
                                 maxProgress = 900
                                 time = 900000
+                                customRecyclerAdapter.changeMode(mode)
                             }
                         }
                     }
@@ -118,7 +124,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             taskArrayList = newTask.loadData()
-            val customRecyclerAdapter = RecyclerAdapter(context = applicationContext, activity = this@MainActivity, taskText, taskArrayList)
+            customRecyclerAdapter = RecyclerAdapter(context = applicationContext, activity = this@MainActivity,
+                mode = mode, taskTextView = taskText, taskArrayList = taskArrayList)
             recyclerView.adapter = customRecyclerAdapter
 
 
@@ -155,12 +162,12 @@ class MainActivity : AppCompatActivity() {
                     val alertDialog = alertDialogBuilder.create()
                     val view = layoutInflater.inflate(R.layout.congrats_dialog, null)
                     val completeBt = view.findViewById<Button>(R.id.completeButton)
-                    isTimerRunning = false
+                    chronometer.text = "00:00"
+                    settings()
                     alertDialog.setView(view)
                     alertDialog.setCancelable(false)
                     completeBt.setOnClickListener {
                         if (activityMainBinding.taskText.text != "") {
-                            chronometer.text = "00:00"
                             val taskObject = findObject(taskText.text.toString(), taskArrayList)
                             taskObject?.let {
                                 val increaseGoal = taskObject.taskModal.doneGoal + 1
@@ -169,14 +176,13 @@ class MainActivity : AppCompatActivity() {
                                 taskArrayList[taskObject.position] = newObject
                                 recyclerView.adapter?.notifyItemChanged(taskObject.position)
                             }
-                            checkPomodoroButton()
                             activityMainBinding.startButton.visibility = View.VISIBLE
                             activityMainBinding.pauseButton.visibility = View.GONE
                         }
+                        checkPomodoroButton()
                         alertDialog.dismiss()
                     }
                     alertDialog.show()
-
                 }
             }.start()
 
@@ -185,10 +191,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun pauseTimer() {
         countDownTimer.cancel()
-        isTimerRunning = false
-        activityMainBinding.shortBreakButton.isClickable = true
-        activityMainBinding.pomodoroButton.isClickable = true
-        activityMainBinding.longBreakButton.isClickable = true
+        settings()
         val currentTime = activityMainBinding.chronometer.text.split(":")
         val minute = currentTime[0].toInt()
         val second = currentTime[1].toInt()
@@ -198,10 +201,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun refreshTimer(mode: String) {
         countDownTimer.cancel()
-        isTimerRunning = false
-        activityMainBinding.shortBreakButton.isClickable = true
-        activityMainBinding.pomodoroButton.isClickable = true
-        activityMainBinding.longBreakButton.isClickable = true
+        settings()
         activityMainBinding.progressBar.progress = 0
         when(mode) {
             "Short Break" -> activityMainBinding.chronometer.text = "05:00"
@@ -227,6 +227,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return null
+    }
+
+    private fun settings() {
+        isTimerRunning = false
+        activityMainBinding.shortBreakButton.isClickable = true
+        activityMainBinding.pomodoroButton.isClickable = true
+        activityMainBinding.longBreakButton.isClickable = true
     }
 
 }

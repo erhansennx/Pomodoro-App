@@ -9,13 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.erhansen.pomodoro.R
 import com.erhansen.pomodoro.database.DatabaseHandler
 import com.erhansen.pomodoro.model.TaskModal
+import kotlinx.coroutines.NonDisposableHandle.parent
 
-class RecyclerAdapter(private val context: Context, private val activity: Activity, private var taskTextView: TextView, private val taskArrayList: ArrayList<TaskModal>) : RecyclerView.Adapter<RecyclerAdapter.ItemHolder>(){
+class RecyclerAdapter(private val context: Context, private val activity: Activity, private var mode: String,private var taskTextView: TextView, private val taskArrayList: ArrayList<TaskModal>) : RecyclerView.Adapter<RecyclerAdapter.ItemHolder>(){
 
     private var selectedItem: Int ?= null
     private var alertDialogBuilder = AlertDialog.Builder(activity)
@@ -35,25 +37,35 @@ class RecyclerAdapter(private val context: Context, private val activity: Activi
         holder.studyNumberText.text = "${taskArrayList[position].doneGoal}/${taskArrayList[position].studyNumber}"
         if (!taskArrayList[position].check) holder.checkImageView.visibility = View.GONE
         holder.itemView.setOnLongClickListener {
-            if (selectedItem == null) {
-                selectedItem = position
-                taskArrayList[position].check = true
-                holder.checkImageView.visibility = View.VISIBLE
-                taskTextView.visibility = View.VISIBLE
-                taskTextView.text = taskArrayList[position].userTask
-            } else if (selectedItem == position) {
-                taskArrayList[selectedItem!!].check = false
-                holder.checkImageView.visibility = View.GONE
-                taskTextView.visibility = View.GONE
-                selectedItem = null
+            if (mode == "Pomodoro") {
+                when (selectedItem) {
+                    null -> {
+                        selectedItem = position
+                        taskArrayList[position].check = true
+                        holder.checkImageView.visibility = View.VISIBLE
+                        taskTextView.visibility = View.VISIBLE
+                        taskTextView.text = taskArrayList[position].userTask
+                    }
+                    position -> {
+                        taskArrayList[selectedItem!!].check = false
+                        holder.checkImageView.visibility = View.GONE
+                        taskTextView.visibility = View.GONE
+                        selectedItem = null
+                        taskTextView.text = ""
+                    }
+                    else -> {
+                        taskArrayList[selectedItem!!].check = false
+                        notifyItemChanged(selectedItem!!)
+                        selectedItem = position
+                        taskArrayList[selectedItem!!].check = true
+                        taskTextView.text = taskArrayList[position].userTask
+                        holder.checkImageView.visibility = View.VISIBLE
+                    }
+                }
             } else {
-                taskArrayList[selectedItem!!].check = false
-                notifyItemChanged(selectedItem!!)
-                selectedItem = position
-                taskArrayList[selectedItem!!].check = true
-                taskTextView.text = taskArrayList[position].userTask
-                holder.checkImageView.visibility = View.VISIBLE
+                Toast.makeText(activity, "You can't choose it the break.", Toast.LENGTH_SHORT).show()
             }
+
             true
         }
         holder.deleteMenu.setOnClickListener {
@@ -76,11 +88,22 @@ class RecyclerAdapter(private val context: Context, private val activity: Activi
         }
     }
 
+    fun changeMode(changedMode: String) {
+        mode = changedMode
+    }
+
     class ItemHolder(itemView: View) : ViewHolder(itemView) {
         val checkImageView: ImageView = itemView.findViewById(R.id.checkImage)
         val taskTextView: TextView = itemView.findViewById(R.id.taskTextView)
         val studyNumberText: TextView = itemView.findViewById(R.id.studyNumberText)
         val deleteMenu: ImageView = itemView.findViewById(R.id.deleteMenu)
+
+        var checkImage: Boolean
+            get() = checkImageView.visibility == View.VISIBLE
+            set(value) {
+                checkImageView.visibility = if(value) View.VISIBLE else View.GONE
+            }
+
     }
 
 }
