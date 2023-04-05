@@ -1,6 +1,9 @@
 package com.erhansen.pomodoro.adapter
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +12,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.erhansen.pomodoro.R
+import com.erhansen.pomodoro.database.DatabaseHandler
 import com.erhansen.pomodoro.model.TaskModal
 
-class RecyclerAdapter(private val context: Context, private var taskTextView: TextView, private val taskArrayList: ArrayList<TaskModal>) : RecyclerView.Adapter<RecyclerAdapter.ItemHolder>(){
-
+class RecyclerAdapter(private val context: Context, private val activity: Activity, private var taskTextView: TextView, private val taskArrayList: ArrayList<TaskModal>) : RecyclerView.Adapter<RecyclerAdapter.ItemHolder>(){
 
     private var selectedItem: Int ?= null
+    private var alertDialogBuilder = AlertDialog.Builder(activity)
+    private var databaseHandler = DatabaseHandler(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.recycler_items, parent, false)
@@ -51,12 +56,31 @@ class RecyclerAdapter(private val context: Context, private var taskTextView: Te
             }
             true
         }
+        holder.deleteMenu.setOnClickListener {
+            with(alertDialogBuilder) {
+                setTitle("Delete Task")
+                setMessage("Are you sure you want to delete ${taskArrayList[position].userTask} task?")
+                setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, which ->
+                    databaseHandler.deleteData(taskArrayList[position])
+                    taskArrayList.removeAt(position)
+                    notifyItemRemoved(position)
+                    taskTextView.text = ""
+                })
+                setNegativeButton("No, Thanks", DialogInterface.OnClickListener { dialog, which ->
+                    dialog.dismiss()
+                })
+                create()
+                show()
+            }
+
+        }
     }
 
     class ItemHolder(itemView: View) : ViewHolder(itemView) {
         val checkImageView: ImageView = itemView.findViewById(R.id.checkImage)
         val taskTextView: TextView = itemView.findViewById(R.id.taskTextView)
         val studyNumberText: TextView = itemView.findViewById(R.id.studyNumberText)
+        val deleteMenu: ImageView = itemView.findViewById(R.id.deleteMenu)
     }
 
 }

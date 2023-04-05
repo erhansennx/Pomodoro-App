@@ -4,16 +4,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
-import android.provider.ContactsContract.Data
-import android.view.MotionEvent
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import com.erhansen.pomodoro.R
 import com.erhansen.pomodoro.adapter.RecyclerAdapter
 import com.erhansen.pomodoro.database.DatabaseHandler
 import com.erhansen.pomodoro.databinding.ActivityMainBinding
+import com.erhansen.pomodoro.model.ItemModal
 import com.erhansen.pomodoro.model.TaskModal
 
 class MainActivity : AppCompatActivity() {
@@ -23,11 +24,13 @@ class MainActivity : AppCompatActivity() {
     private var maxProgress = 0
     private val countDownTime = 60
     private var isTimerRunning = false
-    private lateinit var databaseHandler: DatabaseHandler
-    private var taskArrayList: ArrayList<TaskModal> = arrayListOf()
     private lateinit var newTask: NewTask
+    private lateinit var alertDialogBuilder: AlertDialog.Builder
     private lateinit var countDownTimer: CountDownTimer
+    private lateinit var databaseHandler: DatabaseHandler
     private lateinit var activityMainBinding: ActivityMainBinding
+    private var taskArrayList: ArrayList<TaskModal> = arrayListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +40,11 @@ class MainActivity : AppCompatActivity() {
 
         with(activityMainBinding) {
 
-            newTask = NewTask(this@MainActivity, recyclerView)
             databaseHandler = DatabaseHandler(this@MainActivity)
             databaseHandler.getAllData()
+            newTask = NewTask(this@MainActivity, recyclerView)
+            alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
+
 
             pauseButton.visibility = View.INVISIBLE
 
@@ -113,7 +118,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             taskArrayList = newTask.loadData()
-            val customRecyclerAdapter = RecyclerAdapter(context = applicationContext, taskText, taskArrayList)
+            val customRecyclerAdapter = RecyclerAdapter(context = applicationContext, activity = this@MainActivity, taskText, taskArrayList)
             recyclerView.adapter = customRecyclerAdapter
 
 
@@ -147,14 +152,31 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onFinish() {
-                    chronometer.text = "00:00"
-                    val taskObject = findObject(taskText.text.toString(), taskArrayList)
-                    taskObject?.let {
-                        val increaseGoal = taskObject.doneGoal + 1
-                        val newObject = TaskModal(taskObject.userTask, increaseGoal, taskObject.studyNumber, taskObject.check)
-                        databaseHandler.updateData(newObject)
-                        Toast.makeText(this@MainActivity, "Updated.", Toast.LENGTH_SHORT).show()
+                    val alertDialog = alertDialogBuilder.create()
+                    val view = layoutInflater.inflate(R.layout.congrats_dialog, null)
+                    val completeBt = view.findViewById<Button>(R.id.completeButton)
+                    isTimerRunning = false
+                    alertDialog.setView(view)
+                    alertDialog.setCancelable(false)
+                    completeBt.setOnClickListener {
+                        if (activityMainBinding.taskText.text != "") {
+                            chronometer.text = "00:00"
+                            val taskObject = findObject(taskText.text.toString(), taskArrayList)
+                            taskObject?.let {
+                                val increaseGoal = taskObject.taskModal.doneGoal + 1
+                                val newObject = TaskModal(taskObject.taskModal.userTask, increaseGoal, taskObject.taskModal.studyNumber, taskObject.taskModal.check)
+                                databaseHandler.updateData(newObject)
+                                taskArrayList[taskObject.position] = newObject
+                                recyclerView.adapter?.notifyItemChanged(taskObject.position)
+                            }
+                            checkPomodoroButton()
+                            activityMainBinding.startButton.visibility = View.VISIBLE
+                            activityMainBinding.pauseButton.visibility = View.GONE
+                        }
+                        alertDialog.dismiss()
                     }
+                    alertDialog.show()
+
                 }
             }.start()
 
@@ -194,13 +216,14 @@ class MainActivity : AppCompatActivity() {
         ))
         activityMainBinding.chronometer.text = "25:00"
         maxProgress = 1500
-        time = 25000 //1500000
+        time = 5000 //1500000
     }
 
-    private fun findObject(task: String, array: ArrayList<TaskModal>): TaskModal? {
+    private fun findObject(task: String, array: ArrayList<TaskModal>): ItemModal? {
         for (taskObject in array) {
             if  (taskObject.userTask == task) {
-                return taskObject
+                val index = array.indexOf(taskObject)
+                return ItemModal(taskObject, index)
             }
         }
         return null
