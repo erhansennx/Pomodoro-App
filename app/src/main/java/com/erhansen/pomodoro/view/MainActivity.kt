@@ -180,6 +180,7 @@ class MainActivity : AppCompatActivity() {
                             activityMainBinding.pauseButton.visibility = View.GONE
                         }
                         checkPomodoroButton()
+                        progressBar.progress = 0
                         alertDialog.dismiss()
                     }
                     alertDialog.show()

@@ -1,5 +1,6 @@
 package com.erhansen.pomodoro.adapter
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
@@ -32,49 +33,57 @@ class RecyclerAdapter(private val context: Context, private val activity: Activi
         return taskArrayList.size
     }
 
-    override fun onBindViewHolder(holder: ItemHolder, position: Int) {
+    override fun onBindViewHolder(holder: ItemHolder, @SuppressLint("RecyclerView") position: Int) {
         holder.taskTextView.text = taskArrayList[position].userTask
         holder.studyNumberText.text = "${taskArrayList[position].doneGoal}/${taskArrayList[position].studyNumber}"
         if (!taskArrayList[position].check) holder.checkImageView.visibility = View.GONE
         holder.itemView.setOnLongClickListener {
-            if (mode == "Pomodoro") {
-                when (selectedItem) {
-                    null -> {
-                        selectedItem = position
-                        taskArrayList[position].check = true
-                        holder.checkImageView.visibility = View.VISIBLE
-                        taskTextView.visibility = View.VISIBLE
-                        taskTextView.text = taskArrayList[position].userTask
+            if (taskArrayList[position].doneGoal != taskArrayList[position].studyNumber) {
+                if (mode == "Pomodoro") {
+                    when (selectedItem) {
+                        null -> {
+                            selectedItem = position
+                            taskArrayList[position].check = true
+                            holder.checkImageView.visibility = View.VISIBLE
+                            taskTextView.visibility = View.VISIBLE
+                            taskTextView.text = taskArrayList[position].userTask
+                        }
+                        position -> {
+                            taskArrayList[selectedItem!!].check = false
+                            holder.checkImageView.visibility = View.GONE
+                            taskTextView.visibility = View.GONE
+                            selectedItem = null
+                            taskTextView.text = ""
+                        }
+                        else -> {
+                            taskArrayList[selectedItem!!].check = false
+                            notifyItemChanged(selectedItem!!)
+                            selectedItem = position
+                            taskArrayList[selectedItem!!].check = true
+                            taskTextView.text = taskArrayList[position].userTask
+                            holder.checkImageView.visibility = View.VISIBLE
+                        }
                     }
-                    position -> {
-                        taskArrayList[selectedItem!!].check = false
-                        holder.checkImageView.visibility = View.GONE
-                        taskTextView.visibility = View.GONE
-                        selectedItem = null
-                        taskTextView.text = ""
-                    }
-                    else -> {
-                        taskArrayList[selectedItem!!].check = false
-                        notifyItemChanged(selectedItem!!)
-                        selectedItem = position
-                        taskArrayList[selectedItem!!].check = true
-                        taskTextView.text = taskArrayList[position].userTask
-                        holder.checkImageView.visibility = View.VISIBLE
-                    }
+                } else {
+                    Toast.makeText(activity, "You can't choose it the break.", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(activity, "You can't choose it the break.", Toast.LENGTH_SHORT).show()
+                holder.checkImageView.visibility = View.GONE
+                taskArrayList[position].check = false
+                taskTextView.text = ""
+                Toast.makeText(activity, "You have reached your goal. You can't choose this.", Toast.LENGTH_SHORT).show()
             }
 
             true
         }
+
         holder.deleteMenu.setOnClickListener {
             with(alertDialogBuilder) {
                 setTitle("Delete Task")
                 setMessage("Are you sure you want to delete ${taskArrayList[position].userTask} task?")
                 setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, which ->
                     databaseHandler.deleteData(taskArrayList[position])
-                    taskArrayList.removeAt(position)
+                    taskArrayList.remove(taskArrayList[position])
                     notifyItemRemoved(position)
                     taskTextView.text = ""
                 })
@@ -98,11 +107,7 @@ class RecyclerAdapter(private val context: Context, private val activity: Activi
         val studyNumberText: TextView = itemView.findViewById(R.id.studyNumberText)
         val deleteMenu: ImageView = itemView.findViewById(R.id.deleteMenu)
 
-        var checkImage: Boolean
-            get() = checkImageView.visibility == View.VISIBLE
-            set(value) {
-                checkImageView.visibility = if(value) View.VISIBLE else View.GONE
-            }
+
 
     }
 
