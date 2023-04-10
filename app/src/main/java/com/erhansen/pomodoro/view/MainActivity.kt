@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
                                 mode = "Short Break"
                                 maxProgress = 300
                                 time = 300000
+                                taskText.visibility = View.GONE
                                 customRecyclerAdapter.changeMode(mode)
                             }
                         }
@@ -74,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                             if (!isTimerRunning) {
                                 checkPomodoroButton()
                                 mode = "Pomodoro"
+                                taskText.visibility = View.VISIBLE
                                 customRecyclerAdapter.changeMode(mode)
                             }
                         }
@@ -86,6 +88,7 @@ class MainActivity : AppCompatActivity() {
                                 mode = "Long Break"
                                 maxProgress = 900
                                 time = 900000
+                                taskText.visibility = View.GONE
                                 customRecyclerAdapter.changeMode(mode)
                             }
                         }
