@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                                 chronometer.text = "05:00"
                                 mode = "Short Break"
                                 maxProgress = 300
-                                time = 300000
+                                time = 3000 // 300.000
                                 taskText.visibility = View.GONE
                                 customRecyclerAdapter.changeMode(mode)
                             }
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                                 chronometer.text = "15:00"
                                 mode = "Long Break"
                                 maxProgress = 900
-                                time = 900000
+                                time = 3000 // 900.000
                                 taskText.visibility = View.GONE
                                 customRecyclerAdapter.changeMode(mode)
                             }
@@ -163,30 +163,45 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onFinish() {
                     val alertDialog = alertDialogBuilder.create()
-                    val view = layoutInflater.inflate(R.layout.congrats_dialog, null)
-                    val completeBt = view.findViewById<Button>(R.id.completeButton)
+                    var view: View ?= null
+                    var button: Button ?= null
+
+                    if (mode == "Pomodoro") {
+                        view = layoutInflater.inflate(R.layout.congrats_dialog, null)
+                        button = view.findViewById<Button>(R.id.completeButton)
+                    } else {
+                        view = layoutInflater.inflate(R.layout.break_dialog, null)
+                        button = view.findViewById<Button>(R.id.letsButton)
+                    }
+
                     chronometer.text = "00:00"
                     settings()
                     alertDialog.setView(view)
                     alertDialog.setCancelable(false)
-                    completeBt.setOnClickListener {
-                        if (activityMainBinding.taskText.text != "") {
-                            val taskObject = findObject(taskText.text.toString(), taskArrayList)
-                            taskObject?.let {
-                                val increaseGoal = taskObject.taskModal.doneGoal + 1
-                                val newObject = TaskModal(taskObject.taskModal.userTask, increaseGoal, taskObject.taskModal.studyNumber, taskObject.taskModal.check)
-                                databaseHandler.updateData(newObject)
-                                taskArrayList[taskObject.position] = newObject
-                                recyclerView.adapter?.notifyItemChanged(taskObject.position)
+                    button.setOnClickListener {
+                        if (mode == "Pomodoro") {
+                            if (activityMainBinding.taskText.text != "") {
+                                val taskObject = findObject(taskText.text.toString(), taskArrayList)
+                                taskObject?.let {
+                                    val increaseGoal = taskObject.taskModal.doneGoal + 1
+                                    val newObject = TaskModal(taskObject.taskModal.userTask, increaseGoal, taskObject.taskModal.studyNumber, taskObject.taskModal.check)
+                                    databaseHandler.updateData(newObject)
+                                    taskArrayList[taskObject.position] = newObject
+                                    recyclerView.adapter?.notifyItemChanged(taskObject.position)
+                                }
                             }
-                            activityMainBinding.startButton.visibility = View.VISIBLE
-                            activityMainBinding.pauseButton.visibility = View.GONE
                         }
+                        activityMainBinding.startButton.visibility = View.VISIBLE
+                        activityMainBinding.pauseButton.visibility = View.GONE
+                        toggleGroup.check(R.id.pomodoroButton)
                         checkPomodoroButton()
                         progressBar.progress = 0
+                        pauseButton.visibility = View.GONE
+                        startButton.visibility = View.VISIBLE
                         alertDialog.dismiss()
                     }
                     alertDialog.show()
+
                 }
             }.start()
 

@@ -68,9 +68,9 @@ class RecyclerAdapter(private val context: Context, private val activity: Activi
                     Toast.makeText(activity, "You can't choose it the break.", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                holder.checkImageView.visibility = View.GONE
-                taskArrayList[position].check = false
-                taskTextView.text = ""
+                //holder.checkImageView.visibility = View.GONE
+                //taskArrayList[position].check = false
+                //taskTextView.text = ""
                 Toast.makeText(activity, "You have reached your goal. You can't choose this.", Toast.LENGTH_SHORT).show()
             }
 

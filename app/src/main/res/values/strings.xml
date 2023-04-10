@@ -11,4 +11,5 @@
     <string name="create_task">Benefits of creating tasks; It Makes it easier to Plan, Increases Efficiency, Helps with Focus, Facilitates Success, Boosts Motivation, Facilitates time Management.</string>
     <string name="lets_task">Let\'s create a task.🎉</string>
     <string name="congrats">Great job! You have successfully completed your Pomodoro study session.</string>
+    <string name="break_over">Our break is over. Let\'s complete another pomodoro.</string>
 </resources>
