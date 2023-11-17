@@ -1,14 +1,15 @@
 # Pomodoro-App
 
 <h2> Application Images </h2>
-<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/c34dab68-7ecb-44b7-9035-02099210f04f" width=300>
-<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/04a3e499-a151-4c0e-8bc1-1c7d9a93bada" width=300>
-<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/9fa40abd-1fd3-45a2-96ef-82b009a8051a" width=300>
-<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/f2896049-c3b0-4ccf-b7a0-f0ab74302fc0" width=300>
-<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/49769790-332d-45f6-a246-875379482277" width=300>
-<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/879b14a9-ce32-43f4-87c7-561ec4c7d544" width=300>
-<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/5546d15c-e154-48b6-9f00-b848c42ba66b" width=300>
-<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/af702733-4fc7-4c0a-af8e-2d14cf28eb1b" width=300>
-<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/0659bf10-befe-4933-9059-8d04066f76d9" width=300>
-<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/f37e39ca-f3d1-416f-8d19-db60d21445ab" width=300>
-<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/6066da24-7f08-48cb-b9b3-f0663f2a5047" width=300>
+
+<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/dfdf99e6-6622-40a1-afec-00197dc121da" width=300>
+<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/679f51c7-b409-4cb4-ab72-45df24841224" width=300>
+<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/d2c63331-6ef5-4a72-934b-21c7c26c3c5a" width=300>
+<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/1622285d-bc66-452c-957f-3329d5a6f60f" width=300>
+<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/d5ea0f1b-32ca-48ab-b33d-9e91651ffb27" width=300>
+<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/91a23e66-7b5b-45ba-92a5-67c6c0f7a49d" width=300>
+<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/97d8e44d-4372-466b-865b-69ed53845e5c" width=300>
+<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/44906dba-f5f2-471d-ac88-3bb01943d320" width=300>
+<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/ea5feb92-8b01-4330-b135-8eeeb80365bc" width=300>
+<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/76af1eee-5542-4a73-aa76-54c08d4b9ae2" width=300>
+<img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/93ed5c26-6370-48b6-90ce-f4309c9a23b1" width=300>
