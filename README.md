@@ -1,6 +1,6 @@
 # Pomodoro App
 
-Bu uygulama, Pomodoro tekniğini kullanarak zaman yönetimi yapmayı kolaylaştıran bir araçtır. Pomodoro tekniği, odaklanmayı artırmak ve verimliliği artırmak için belli aralıklarla çalışma ve mola verme prensibine dayanır.
+Bu uygulama, Pomodoro tekniğini kullanarak zaman yönetimi yapmayı kolaylaştıran bir mobil uygulamadır. Pomodoro tekniği, odaklanmayı artırmak ve verimliliği artırmak için belli aralıklarla çalışma ve mola verme prensibine dayanır.
 
 ## Özellikler
 
