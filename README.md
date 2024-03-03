@@ -1,6 +1,15 @@
-# Pomodoro-App
+# Pomodoro App
 
-<h2> Application Images </h2>
+Bu uygulama, Pomodoro tekniğini kullanarak zaman yönetimi yapmayı kolaylaştıran bir araçtır. Pomodoro tekniği, odaklanmayı artırmak ve verimliliği artırmak için belli aralıklarla çalışma ve mola verme prensibine dayanır.
+
+## Özellikler
+
+- Pomodoro zamanlayıcısı: Belirli bir çalışma süresini (genellikle 25 dakika) ve ara verme süresini ayarlayabilirsiniz.
+- Bildirimler: Çalışma ve mola zamanlarının bitiminde bildirim alabilirsiniz.
+- Görev listesi: Yapmanız gereken görevleri ekleyebilir ve bunları tamamladıkça işaretleyebilirsiniz.
+- İstatistikler: Toplam çalışma süresi, tamamlanan görev sayısı gibi istatistikler görüntülenebilir.
+
+## Uygulama İçi Görüntüler
 
 <img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/dfdf99e6-6622-40a1-afec-00197dc121da" width=300>
 <img src="https://github.com/erhansennx/Pomodoro-App/assets/77855407/679f51c7-b409-4cb4-ab72-45df24841224" width=300>
